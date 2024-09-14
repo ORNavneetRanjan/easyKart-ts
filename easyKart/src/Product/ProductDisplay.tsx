@@ -6,10 +6,9 @@ import Loading from "../Components/Loading";
 import { RxTrackPrevious, RxTrackNext } from "react-icons/rx";
 import NotFound from "../Components/NotFound";
 import { ProductProps } from "./Product";
+import { withCart } from "../withProvider";
 type ProductDisplayProps = {
   addToCart: (sku: number, quantity: number) => void;
-  updateCart: (sku: number, quantity: number) => void;
-  quantityMap: Record<number, number>;
 };
 
 const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart }) => {
@@ -44,6 +43,7 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart }) => {
   };
 
   const handleButtonClick = () => {
+    console.log(addToCart);
     addToCart(skuNumber, count);
   };
 
@@ -56,11 +56,13 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart }) => {
         >
           <IoChevronBackSharp />
         </Link>
-        <div className="grow bg-white flex flex-col md:flex-row p-4 md:p-5 shadow-xl mx-4 md:mx-14 w-full max-w-4xl">
+        <div className="grow bg-white flex flex-col md:flex-row p-4 md:p-5 shadow-xl mx-4 md:mx-14 w-full max-w-4xl ">
           <img
-            src={product.thumbnail}
+            src={
+              "https://images.pexels.com/photos/26935559/pexels-photo-26935559/free-photo-of-modern-camera-on-a-tripod-with-a-stabilizer.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            }
             alt={product.title}
-            className="w-full md:w-1/2 object-cover"
+            className="w-full md:w-1/2 object-cover max-h-52 lg:max-h-96"
           />
 
           <div className="flex flex-col px-2 md:px-8 gap-2 md:gap-5 w-full md:w-1/2 mt-4 md:mt-0">
@@ -113,4 +115,4 @@ const ProductDisplay: React.FC<ProductDisplayProps> = ({ addToCart }) => {
   );
 };
 
-export default ProductDisplay;
+export default withCart(ProductDisplay);

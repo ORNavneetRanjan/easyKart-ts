@@ -1,20 +1,17 @@
 import axios, { AxiosResponse } from "axios";
-import { ProductProps } from "../Product/Product";
+import { Product } from "../Models";
 
-// Create a type alias
-type Product = ProductProps;
-
-interface CartItem {
+type CartItem = {
   productId: number;
   quantity: number;
   // Add other fields as necessary
-}
+};
 
 // Fetch a single product by ID
 export function getProductData(id: number): Promise<Product> {
   return axios
     .get(`https://myeasykart.codeyogi.io/product/${id}`)
-    .then((response: AxiosResponse<Product>) => {
+    .then((response) => {
       console.log(response);
       return response.data;
     });
@@ -29,13 +26,12 @@ export function getProductsByIds(ids: string[]): Promise<Product[]> {
         ids: commaSeparatedIds,
       },
     })
-    .then((response: AxiosResponse<Product[]>) => {
+    .then((response) => {
       console.log(response.data);
       return response.data;
     });
 }
 
-// Fetch a list of products with optional sorting, query, pagination, and sorting type
 interface GetProductListParams {
   sortBy?: string;
   query?: string;
@@ -79,6 +75,7 @@ export const getProductList = ({
       return response.data;
     });
 };
+
 type QuantityMap = Record<string, number>;
 // Save the cart data
 export function saveCart(cart: QuantityMap): Promise<void> {
@@ -92,7 +89,7 @@ export function saveCart(cart: QuantityMap): Promise<void> {
         },
       }
     )
-    .then((response: AxiosResponse<void>) => {
+    .then((response) => {
       return response.data;
     });
 }
@@ -105,7 +102,7 @@ export function getCart(): Promise<CartItem[]> {
         Authorization: localStorage.getItem("token") || "",
       },
     })
-    .then((response: AxiosResponse<CartItem[]>) => {
+    .then((response) => {
       return response.data;
     });
 }

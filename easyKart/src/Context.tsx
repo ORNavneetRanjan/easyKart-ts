@@ -1,14 +1,14 @@
 import { createContext } from "react";
-import { AlertType } from "./Components/Alert";
+import { AlertType } from "./Models";
 import { CartItem } from "./Provider/CartProvider";
-import { UserContextType } from "./Provider/UserProvider";
+import { User } from "./Models";
 
-export interface AlertContextType {
+export type AlertContextType = {
   alert: AlertType | undefined;
   setAlert: (alert: AlertType) => void;
-}
+};
 
-export interface CartContextType {
+export type CartContextType = {
   cart: CartItem[];
   addToCart: (productID: number, count: number) => void;
   deleteItems: (id: string) => void;
@@ -21,6 +21,12 @@ export interface CartContextType {
   isUpdated: boolean;
   setUpdate: (updated: boolean) => void;
   loading: boolean;
+};
+
+export interface UserContextType {
+  isLoggedIn: boolean;
+  user: User | undefined;
+  setUser: (user: User | undefined) => void;
 }
 
 // Create contexts with the defined types

@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import { TiDelete } from "react-icons/ti";
-import { withCart } from "../withProvider"; // Adjust the path as necessary
+import { withCart } from "../withProvider";
 
 // Define the type for SingleItem props
-interface SingleItemProps {
+type SingleItemProps = {
   link: string;
   title: string;
   price: number;
   quantity: number;
-  id: string;
+  id: number;
   deleteItems: (id: string) => void;
   handleChange: (id: string, quantity: number) => void;
   setUpdate: (status: boolean) => void;
-}
+};
 
 const SingleItem: React.FC<SingleItemProps> = ({
-  link,
   title,
   price,
   quantity,
@@ -27,13 +26,13 @@ const SingleItem: React.FC<SingleItemProps> = ({
   const [newQuantity, setQuantity] = useState<number>(quantity);
 
   function handleRemove() {
-    deleteItems(id);
+    deleteItems(id.toString());
   }
 
   function onHandleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const value = event.target.value ? Number(event.target.value) : 0;
     setQuantity(value);
-    handleChange(id, value); // Pass both ID and the new value
+    handleChange(id.toString(), value); // Pass both ID and the new value
     setUpdate(true);
   }
 
@@ -46,7 +45,9 @@ const SingleItem: React.FC<SingleItemProps> = ({
         <div className="flex items-center col-span-2">
           <img
             className="w-16 h-16 object-cover"
-            src={link} // Use the link prop for the image src
+            src={
+              "https://images.pexels.com/photos/27469964/pexels-photo-27469964/free-photo-of-a-woman-is-cutting-a-pink-cake.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            } // Use the link prop for the image src
             alt={title}
           />
           <p className="ml-4 text-lg font-medium">{title}</p>

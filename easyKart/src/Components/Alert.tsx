@@ -1,32 +1,12 @@
 import { useEffect } from "react";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { MdErrorOutline } from "react-icons/md";
 import { withAlert } from "../withProvider";
+import { AlertType, themeMap } from "../Models";
 
-// Define the Alert type
-export interface AlertType {
-  message: string;
-  type: keyof typeof themeMap; // 'success' | 'error'
-}
-
-// Define the props for the Alert component
 interface AlertProps {
-  alert?: AlertType | undefined; // alert can be undefined
+  alert?: AlertType | undefined;
   setAlert: (alert?: AlertType) => void;
   removeAlert: () => void;
 }
-
-// Define the themeMap with types
-const themeMap = {
-  success: {
-    color: "bg-green-400",
-    Icon: FaRegCheckCircle,
-  },
-  error: {
-    color: "bg-red-400",
-    Icon: MdErrorOutline,
-  },
-};
 
 function Alert({ alert, setAlert, removeAlert }: AlertProps) {
   useEffect(() => {

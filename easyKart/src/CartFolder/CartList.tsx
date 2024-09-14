@@ -1,4 +1,4 @@
-import React from "react";
+import { FC } from "react";
 import SingleItem from "./SingleItem";
 import { withCart } from "../withProvider";
 import { CartItem } from "../Provider/CartProvider"; // Import CartItem if it's defined
@@ -8,7 +8,7 @@ interface CartListProps {
   cart: CartItem[]; // Adjust this type according to your CartItem definition
 }
 
-const CartList: React.FC<CartListProps> = ({ cart }) => {
+const CartList: FC<CartListProps> = ({ cart }) => {
   return (
     <>
       {cart.map((item) => (

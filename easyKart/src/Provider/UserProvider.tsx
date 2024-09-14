@@ -2,22 +2,9 @@ import { useEffect, useState, ReactNode } from "react";
 import { UserContext } from "../Context";
 import Loading from "../Components/Loading";
 import axios from "axios";
+import { User } from "../Models";
 
 // Define the User type based on the response structure
-export interface User {
-  id: number;
-  full_name: string;
-  email: string;
-  remember_me_token: string | null;
-  created_at: string; // Date in ISO format
-  updated_at: string; // Date in ISO format
-}
-
-export interface UserContextType {
-  isLoggedIn: boolean;
-  user: User | undefined;
-  setUser: (user: User | undefined) => void;
-}
 
 interface UserProviderProps {
   children: ReactNode;

@@ -7,28 +7,27 @@ import {
   saveCart,
 } from "../API/app";
 import { withUser } from "../withProvider";
-import { ProductProps } from "../Product/Product";
+import { Product } from "../Models";
 
-// Define the types for the props
-interface CartProviderProps {
+type CartProviderProps = {
   isLoggedIn: boolean;
   children: ReactNode;
-}
+};
 
-// Define the types for the cart items and quantity map
-export interface CartItem {
-  product: ProductProps; // Define the Product type based on your data model
+export type CartItem = {
+  product: Product;
   quantity: number;
-}
+};
 
-type QuantityMap = Record<string, number>; // A map from product IDs to quantities
+type QuantityMap = Record<string, number>;
 
 function CartProvider({ isLoggedIn, children }: CartProviderProps) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [isUpdated, setUpdate] = useState(false);
   const [quantityMap, setQuantityMap] = useState<QuantityMap>({});
-
+  console.log("cart is ", cart);
+  console.log("quantity map is", quantityMap);
   useEffect(() => {
     if (!isLoggedIn) {
       const savedDataString = localStorage.getItem("my-cart") || "{}";
@@ -102,12 +101,15 @@ function CartProvider({ isLoggedIn, children }: CartProviderProps) {
   );
 
   const deleteItems = useCallback(
-    (id: string) => {
+    (id: number) => {
+      const newCart = cart.filter((item) => item.product.id !== id); // Remove the item by product ID
       const newQuantityMap = { ...quantityMap };
       delete newQuantityMap[id];
-      updateCart(newQuantityMap);
+      setQuantityMap(newQuantityMap);
+      setCart(newCart); // Update the cart with the filtered items
+      updateCart(newQuantityMap); // Update quantityMap in localStorage or backend
     },
-    [quantityMap, updateCart]
+    [cart, quantityMap, updateCart]
   );
 
   const handleChange = useCallback((productId: string, newValue: number) => {
